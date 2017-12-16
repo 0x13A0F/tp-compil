@@ -118,16 +118,10 @@ arithm_exp:    val  {$$.Type = $1.Type; if ($$.Type==0) sprintf($$.val,"%d",atoi
                  if (rechercherNom(sym_tab,$1)==-1)
                    { fprintf(stderr,"Erreur semantique:(%d:%d) %s n'est pas declare\n",line,col,$1); exit(1); }
                  $$.Type=GetType(sym_tab,$1);
-                 //if ($$.Type==0)
-                //    sprintf($$.val,"%d",(int)getIdfVal(sym_tab,$1));
-                // else
-                  //  sprintf($$.val,"%f",getIdfVal(sym_tab,$1));
                }
                |arithm_exp Plus arithm_exp {
                                             if ($1.Type == $3.Type){
                                                 $$.Type=$1.Type;
-                                                  //if ($$.Type == 0)   sprintf($$.val,"%d",atoi($1.val)+atoi($3.val));
-                                                  //else                sprintf($$.val,"%f",atof($1.val)+atof($3.val));
                                                 sprintf(t,"T%d",cmp++);
                                                 insererQuad(&Quads,"+",$1.val,$3.val,strdup(t));
                                                 printf("\n\n%d-(+,%s,%s,%s)\n\n",qc,$3.val,$1.val,t);
@@ -142,8 +136,6 @@ arithm_exp:    val  {$$.Type = $1.Type; if ($$.Type==0) sprintf($$.val,"%d",atoi
                 |arithm_exp Minus arithm_exp {
                                               if ($1.Type == $3.Type){
                                                 $$.Type=$1.Type;
-                                                //if ($$.Type == 0) sprintf($$.val,"%d",atoi($1.val)-atoi($3.val));
-                                                //else      sprintf($$.val,"%f",atof($1.val)-atof($3.val));
                                                 sprintf(t,"T%d",cmp++);
 
                                                 insererQuad(&Quads,"-",$1.val,$3.val,strdup(t));
@@ -160,8 +152,6 @@ arithm_exp:    val  {$$.Type = $1.Type; if ($$.Type==0) sprintf($$.val,"%d",atoi
                 |arithm_exp Mul arithm_exp {
                                               if ($1.Type == $3.Type){
                                                 $$.Type=$1.Type;
-                                                //if ($$.Type == 0)   sprintf($$.val,"%d",atoi($1.val)*atoi($3.val));
-                                                //else  sprintf($$.val,"%f",atof($1.val)*atof($3.val));
                                                 sprintf(t,"T%d",cmp++);
                                                 insererQuad(&Quads,"*",$1.val,$3.val,strdup(t));
                                                 printf("\n\n%d-(*,%s,%s,%s)\n\n",qc,$3.val,$1.val,t);
@@ -177,8 +167,6 @@ arithm_exp:    val  {$$.Type = $1.Type; if ($$.Type==0) sprintf($$.val,"%d",atoi
                                              if ($1.Type == $3.Type){
                                                $$.Type=$1.Type;
                                                if (atoi($3.val)==0)  { fprintf(stderr,"Erreur semantique:(%d:%d) divison par zero\n",line,col); exit(1); }
-                                               //if ($$.Type == 0)    sprintf($$.val,"%d",atoi($1.val)/atoi($3.val));
-                                               //else   sprintf($$.val,"%f",atof($1.val)/atof($3.val));
                                                sprintf(t,"T%d",cmp++);
                                                insererQuad(&Quads,"/",$1.val,$3.val,strdup(t));
                                                printf("\n\n%d-(/,%s,%s,%s)\n\n",qc,$3.val,$1.val,t);
